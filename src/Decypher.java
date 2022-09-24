@@ -1,4 +1,6 @@
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.Format;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,12 +54,13 @@ public class Decypher {
         int buffer = 0;
         int[] key = new int[2];
         String[] words;
+        String cipher = Files.readString(Path.of(cipherFile));
 
 
         for(int j = 1; j < 128; j++) {
             for(int i = 1; i < 128; i++) {
                 if (Affine.validateInts(i, j)) {
-                    crypt = Decrypt.decryptString(cipherFile, i, j);
+                    crypt = Decrypt.decryptString(cipher, i, j);
                     words = crypt.toLowerCase().split("\\W+");
                     matchedWords = 0;
                     for (String word: words) {

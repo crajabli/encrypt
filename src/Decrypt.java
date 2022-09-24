@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 
@@ -62,22 +63,17 @@ public class Decrypt {
     }
 
 
-    public static String decryptString(String fileName, int a, int b) {
+    public static String decryptString(String encryption, int a, int b) {
         String crypt = "";
         if (!Affine.validateInts(a, b)) {
             return String.format("The key pair (%d, %d) is invalid, please select another key.", a, b);
         }
         Decrypt decrypter = new Decrypt(a, b);
 
-        int i;
-        try {
-            FileReader fr = new FileReader(fileName);
-            while ((i = fr.read()) != -1) {
-                crypt += (char) decrypter.decryptLetter(i);
-            }
-        } catch (IOException e) {
-            System.out.println("File not found");
+        for (int i = 0; i < encryption.length(); i++) {
+            crypt += (char) decrypter.decryptLetter(encryption.charAt(i));
         }
+
 
         return crypt;
 
