@@ -60,4 +60,26 @@ public class Decrypt {
         return crypt;
 
     }
+
+
+    public static String decryptString(String fileName, int a, int b) {
+        String crypt = "";
+        if (!Affine.validateInts(a, b)) {
+            return String.format("The key pair (%d, %d) is invalid, please select another key.", a, b);
+        }
+        Decrypt decrypter = new Decrypt(a, b);
+
+        int i;
+        try {
+            FileReader fr = new FileReader(fileName);
+            while ((i = fr.read()) != -1) {
+                crypt += (char) decrypter.decryptLetter(i);
+            }
+        } catch (IOException e) {
+            System.out.println("File not found");
+        }
+
+        return crypt;
+
+    }
 }

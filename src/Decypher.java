@@ -7,7 +7,8 @@ public class Decypher {
     String cypherFile;
     String outputFile;
     String dictionaryFile;
-    static ArrayList<String> dictionary;
+    int a;
+    int b;
 
 
 
@@ -18,21 +19,34 @@ public class Decypher {
     }
 
 
-    private static ArrayList<String> dictionary(String dictionaryFile) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(dictionaryFile));
-        ArrayList<String> words = new ArrayList<>();
-        String word = br.readLine();
-        while (word != null) {
-            words.add(word);
-            word = br.readLine();
+
+
+    public static boolean isInFile(String wordExamine, String dictionaryFile) throws FileNotFoundException {
+        try {
+            FileReader fr = new FileReader(dictionaryFile);
+            BufferedReader bufferedReader = new BufferedReader(fr);
+            String word = bufferedReader.readLine();
+            while (word != null) {
+                if (word.contains(wordExamine)) {
+                    return true;
+                }
+                word = bufferedReader.readLine();
+            }
+            bufferedReader.close();
+            fr.close();
+
+        } catch (IOException ie) {
+            System.out.println("File doesnt exist");
         }
-        br.close();
-        return words;
+
+
+        return false;
+
     }
 
 
+
     public static String decipher(String cipherFile, String outputFile, String dictionaryFile) throws IOException {
-        dictionary = dictionary(dictionaryFile);
         String crypt = "";
         int matchedWords;
         int buffer = 0;
@@ -43,11 +57,11 @@ public class Decypher {
         for(int j = 1; j < 128; j++) {
             for(int i = 1; i < 128; i++) {
                 if (Affine.validateInts(i, j)) {
-                    crypt = Decrypt.decrypt(cipherFile, outputFile, "" + i, "" + j);
+                    crypt = Decrypt.decryptString(cipherFile, i, j);
                     words = crypt.toLowerCase().split("\\W+");
                     matchedWords = 0;
                     for (String word: words) {
-                        if (dictionary.contains(word)) {
+                        if (isInFile(word, dictionaryFile)) {
                             System.out.println(word);
                            matchedWords++;
                         }
