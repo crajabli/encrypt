@@ -14,8 +14,6 @@ public class Decypher {
     String outputFile;
     String dictionaryFile;
     static ArrayList<String> dictionary;
-    int a;
-    int b;
 
 
     /**
@@ -25,7 +23,7 @@ public class Decypher {
      * @param outputFile decyphered file with the key compbination
      * @param dictionaryFile the provided dictionary file
      */
-    public Decypher(String cypherFile, String outputFile, String dictionaryFile) {
+    public Decypher(String cypherFile, String outputFile, String dictionaryFile) throws IOException {
         this.cypherFile = cypherFile;
         this.outputFile = outputFile;
         this.dictionaryFile = dictionaryFile;
@@ -49,6 +47,17 @@ public class Decypher {
         }
         br.close();
         return words;
+    }
+
+
+
+    private static boolean dictionaryContains(String word) {
+        for (String words: dictionary) {
+            if (words.equals(word)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -79,7 +88,7 @@ public class Decypher {
                     matchedWords = 0;
                     for (String word: words) {
                         if (words.length > buffer) {
-                            if (word.length() >= 3 && dictionary.contains(word)) {
+                            if (word.length() >= 4 && dictionaryContains(word)) {
                                 System.out.println(word);
                                 matchedWords++;
                             }

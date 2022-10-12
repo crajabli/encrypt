@@ -49,16 +49,16 @@ public class Affine {
         String command = args[0];
         switch (command) {
             case "encrypt":
-                System.out.println("Encrypt");
-                System.out.println(Encrypt.encrypt(args[1], args[2], args[3], args[4]));
+                Encrypt.encrypt(args[1], args[2], args[3], args[4]);
                 break;
             case "decrypt":
-                System.out.println("Decrypt");
-                System.out.println(Decrypt.decrypt(args[1], args[2], args[3], args[4]));
+                Decrypt.decrypt(args[1], args[2], args[3], args[4]);
                 break;
             case "decipher":
-                System.out.println("Decipher");
-                System.out.println(Decypher.decipher(args[1], args[2], args[3]));
+                Decypher.decipher(args[1], args[2], args[3]);
+                break;
+            default:
+                System.out.println("Wrong command");
                 break;
         }
     }

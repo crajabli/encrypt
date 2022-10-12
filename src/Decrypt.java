@@ -72,7 +72,7 @@ public class Decrypt {
         int a = parseInt(x);
         int b = parseInt(y);
         if (!Affine.validateInts(a, b)) {
-            return String.format("The key pair (%d, %d) is invalid, please select another key.", a, b);
+            return String.format("The key pair ({%d}, {%d}) is invalid, please select another key.", a, b);
         }
         Decrypt decrypter = new Decrypt(a, b);
         File file = new File(newFileName);
